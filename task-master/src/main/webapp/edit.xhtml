@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <title>Edit Task</title>
+
+    <f:metadata>
+        <f:viewParam name="task" value="#{taskBean.task.id}"/>
+        <f:event type="preRenderView" listener="#{taskBean.selecionar}"/>
+    </f:metadata>
+</h:head>
+<h:body>
+
+    <h:messages globalOnly="true"/>
+
+    <h:panelGroup rendered="#{taskBean.task.id != 0}">
+        <h1>Edit Task
+            "<h:outputText value="#{taskBean.task.title}"/>"
+        </h1>
+
+        <p>Last Update
+            <h:outputText value="#{taskBean.task.dtLastUpdate}">
+                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="#{initParam.timezone}"/>
+            </h:outputText>
+            .
+        </p>
+
+        <h:form>
+            <p:panelGrid columns="3">
+                <h:outputLabel value="Title:"/>
+                <h:inputText id="title" value="#{taskBean.task.title}" required="true">
+                    <f:validateLength minimum="3" maximum="255"/>
+                </h:inputText>
+                <h:message for="title"/>
+
+                <h:outputLabel value="Description:"/>
+                <h:inputTextarea id="description" value="#{taskBean.task.description}" required="true">
+                    <f:validateLength minimum="3" maximum="255"/>
+                </h:inputTextarea>
+                <h:message for="description"/>
+
+                <h:outputLabel value="Date:"/>
+                <h:inputText id="data-inicio" value="#{taskBean.task.inicio}" required="true">
+                    <f:convertDateTime pattern="dd/MM/yyyy" timeZone="#{initParam.timezone}"/>
+                </h:inputText>
+                <h:message for="data-inicio"/>
+
+                <h:outputLabel value="Priority:"/>
+                <h:selectOneMenu id="priority" value="#{taskBean.task.priority}" required="true">
+                    <f:selectItems value="#{taskBean.prioritys}"
+                                   var="priority"
+                                   itemValue="#{priority}"
+                                   itemLabel="#{priority.description}"
+                    />
+                </h:selectOneMenu>
+                <h:message for="priority"/>
+
+                <h:outputLabel value="Done?"/>
+                <h:selectOneRadio id="done" value="#{taskBean.task.done}">
+                    <f:selectItem itemValue="true" itemLabel="YES"/>
+                    <f:selectItem itemValue="false" itemLabel="NO"/>
+                </h:selectOneRadio>
+                <h:message for="done"/>
+            </p:panelGrid>
+			<br></br>
+            <p:commandButton value="Update" action="#{taskBean.update}"/>
+        </h:form>
+		<br></br>
+        <h:link value="Back" outcome="home"/>
+    </h:panelGroup>
+</h:body>
+</html>

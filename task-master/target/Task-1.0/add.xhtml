@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <title>Add Task</title>
+</h:head>
+<h:body>
+    <h3>Add Task</h3>
+
+    <h:form>
+    	<p:panelGrid columns="3">
+    	
+			<h:outputLabel value="Title"/>
+            <p:inputText id="title" value="#{taskBean.task.title}" required="true">
+                <f:validateLength minimum="3" maximum="255"/>
+            </p:inputText>
+            <p:message for="title"/>
+
+            <h:outputLabel value="TODO"/>
+            <h:inputTextarea id="description" value="#{taskBean.task.description}" required="true">
+                <f:validateLength minimum="3" maximum="255"/>
+            </h:inputTextarea>
+            <p:message for="description"/>
+
+            <p:outputLabel for="data-inicio" value="Date time:" />
+        	<p:calendar id="data-inicio" value="#{taskBean.task.inicio}" required="true" pattern="dd/MM/yyyy HH:mm:ss" />
+            <p:message for="data-inicio"/>
+
+            <h:outputLabel value="Priority:"/>
+            <h:selectOneMenu id="priority" value="#{taskBean.task.priority}" required="true">
+                <f:selectItems value="#{taskBean.prioritys}"
+                               var="priority"
+                               itemValue="#{priority}"
+                               itemLabel="#{priority.description}"
+                />
+            </h:selectOneMenu>
+            <h:message for="priority"/>
+		</p:panelGrid>
+		
+		<br></br>
+        <p:commandButton value="Send" action="#{taskBean.inserir}"/>
+    </h:form>
+	<br></br>
+    <h:link value="Back" outcome="home"/>
+</h:body>
+</html>

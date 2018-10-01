@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <title>Tasks</title>
+</h:head>
+<h:body>
+    <h1>List of Tasks - TODO</h1>
+
+    <p:messages globalOnly="true"/>
+
+<!--     <h:link value="New Task - TODO" outcome="add"/> -->
+
+    <p:dataTable value="#{taskBean.tasks}" var="task">
+        <p:column>
+            <f:facet name="header">#</f:facet>
+            #{task.id}
+        </p:column>
+        <p:column>
+            <f:facet name="header">Title</f:facet>
+            #{task.title}
+        </p:column>
+        <p:column>
+            <f:facet name="header">Description</f:facet>
+            #{task.description}
+        </p:column>
+        <p:column>
+            <f:facet name="header">Date</f:facet>
+<!--             <h:outputText id="datetime" value="#{task.inicio}" showOn="none" readonly="true"> -->
+<!--             	 <f:formatDateTime type="date" pattern="dd/MM/yyyy HH:mm:ss"/> -->
+<!--            	 </h:outputText> -->
+           	 <h:outputText id="datetime" value="#{task.inicio}">
+        			<f:convertDateTime timeZone="#{referenceData.timezone}" pattern="MMM dd, yyyy HH:mm:ss" />
+    		</h:outputText>
+        </p:column>
+        <p:column>
+            <f:facet name="header">Priority</f:facet>
+            <h:outputText value="#{task.priority}"/>
+        </p:column>
+        <p:column>
+            <f:facet name="header">Done?</f:facet>
+            <h:outputText value="#{task.doneAsString}"/>
+        </p:column>
+        <p:column>
+            <f:facet name="header">Last Update</f:facet>
+<!--             <h:outputText id="datetime" value="#{task.inicio}" showOn="none" readonly="true"> -->
+<!--             	 <f:formatDateTime type="date" pattern="dd/MM/yyyy HH:mm:ss"/> -->
+<!--            	 </h:outputText> -->
+           	 <h:outputText id="dtLastUpdate" value="#{task.dtLastUpdate}">
+        			<f:convertDateTime timeZone="#{referenceData.timezone}" pattern="MMM dd, yyyy HH:mm:ss" />
+    		</h:outputText>
+        </p:column>
+        <p:column>
+            <p:button outcome="editar" value="Edit" icon="ui-icon-pencil">
+			    <f:param name="task" value="#{task.id}" />
+			</p:button>
+        </p:column>
+        <p:column>
+            <p:button outcome="remove" value="Delete" icon="ui-icon-trash">
+			    <f:param name="task" value="#{task.id}" />
+			</p:button>
+        </p:column>
+    </p:dataTable>
+    <br></br>
+    <p:button outcome="add" value="New Task - TODO" icon="ui-icon-plus"/>
+    <p:button outcome="newUser" value="Users" icon="ui-icon-person"/>
+    <h:commandButton value="Logout" action="#{usersBean.registraSaida}"/>
+</h:body>
+</html>

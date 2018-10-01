@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+>
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <title>Delete Task</title>
+
+    <f:metadata>
+        <f:viewParam name="task" value="#{taskBean.task.id}"/>
+        <f:event type="preRenderView" listener="#{taskBean.selecionar}"/>
+    </f:metadata>
+</h:head>
+<h:body>
+
+    <h:messages globalOnly="true"/>
+
+    <h:panelGroup rendered="#{taskBean.task.id != 0}">
+        <h1>Do you want to remove this task"
+            <h:outputText value="#{taskBean.task.title}"/>
+            "?
+        </h1>
+
+        <p>Last Update
+            <h:outputText value="#{taskBean.task.dtLastUpdate}">
+                <f:convertDateTime pattern="dd/MM/yyyy" timeZone="#{initParam.timezone}"/>
+            </h:outputText>
+            .
+        </p>
+
+        <h:form>
+            <h:commandButton value="Confirmar" action="#{taskBean.excluir}"/>
+        </h:form>
+    </h:panelGroup>
+
+    <h:link value="Voltar" outcome="home"/>
+</h:body>
+</html>
